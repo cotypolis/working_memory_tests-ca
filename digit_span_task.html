@@ -52,16 +52,35 @@
   var highest_span_score = 0
   var consec_error_score = 0
 
+  const queryString = window.location.search;
+  // console.log(queryString);
+  const urlParams = new URLSearchParams(queryString);
+  const text1 = "Enter participant number, name, or ID: ";
+  // const text1 = "Enter participant number, name, or ID: ";
+  const text2 = urlParams.get('qualtricsID')
+  // var text2 = GetUrlKeyValue("qualtricsID", false, window.location.href);
+  const results = text1.concat(text2);
   // first page. identifies participant for data storage
   var p_details = {
-    type:"survey-text",
-    questions: [{prompt: "Enter participant ***number, name, or ID"}],
+    // type:"survey-text",
+    type: 'instructions',
+    // questions: [{prompt: "Please click continue"}],
+    pages: function(){
+        pageOne = "<div style='font-size:20px;'>This is a test blablabla <br><br> If you have further questions about the task, ask the researcher now.<br> If you are clear about the task, click 'Next' to proceed to the trial.<br><br></div>"
+        return [pageOne]
+      },
+      allow_backward: false,
+      button_label_next: "Next",
+      show_clickable_nav: true,
     on_finish:function(){
-      partN = "Next" //jsPsych.data.get().last(1).values()[0].partNum
-      partN = //partN.replace(/['"]+/g,'')
+      // partN = jsPsych.data.get().last(1).values()[0].partNum
+      // partN = partN.replace(/['"]+/g,'')
+      partN = text2
 //      console.log(partN[0])
     }
   }
+
+
 
 // instruction page
 var instructions = {
